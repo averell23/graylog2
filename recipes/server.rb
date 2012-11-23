@@ -26,6 +26,7 @@ end
 # Install required APT packages
 package "openjdk-6-jre"
 package "mongodb-10gen"
+package "mongo-10gen-server"
 
 # Create the release directory
 directory "#{node.graylog2.basedir}/rel" do

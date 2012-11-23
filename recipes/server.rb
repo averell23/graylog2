@@ -65,8 +65,11 @@ template "/etc/init.d/graylog2" do
   mode 0755
 end
 
-# Service resource
 service "graylog2" do
   supports :restart => true
+  action [:enable, :start]
+end
+
+service "mongod" do
   action [:enable, :start]
 end

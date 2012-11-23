@@ -66,12 +66,12 @@ end
 # Create general.yml
 template "#{node.graylog2.basedir}/web/config/general.yml" do
   owner "nobody"
-  group "nogroup"
+  group "nobody"
   mode 0644
 end
 
-# Chown the Graylog2 directory to nobody/nogroup to allow web servers to serve it
-execute "sudo chown -R nobody:nogroup graylog2-web-interface-#{node.graylog2.web_interface.version}" do
+# Chown the Graylog2 directory to nobody/nobody to allow web servers to serve it
+execute "sudo chown -R nobody:nobody graylog2-web-interface-#{node.graylog2.web_interface.version}" do
   cwd "#{node.graylog2.basedir}/rel"
   not_if do
     File.stat("#{node.graylog2.basedir}/rel/graylog2-web-interface-#{node.graylog2.web_interface.version}").uid == 65534

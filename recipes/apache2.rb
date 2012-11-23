@@ -28,9 +28,6 @@ yum_repository "passenger" do
   key "passenger-gpg-key"
 end
 
-# Install Graylog2 web interface
-include_recipe "graylog2::web_interface"
-
 # Install Apache using the OpsCode community cookbook
 include_recipe "apache2"
 
@@ -41,6 +38,9 @@ include_recipe "apache2"
 package "mod_passenger"
 
 gem_package "chef" # Re-enable chef if the previous thing killed it, kludgy
+
+# Install Graylog2 web interface
+include_recipe "graylog2::web_interface"
 
 # Create an Apache vhost for the Graylog2 web interface
 template "apache-vhost-conf" do

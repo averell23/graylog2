@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-# Install required APT packages
+# Install required packages
 package "build-essential"
 package "postfix"
 

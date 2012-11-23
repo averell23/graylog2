@@ -17,17 +17,10 @@
 # limitations under the License.
 #
 
-# Add APT public key for the 10gen MongoDB repo
-execute "apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10" do
-  not_if 'apt-key list | grep "7F0CEB10"'
-end
-
-# Add the 10gen MongoDB repository to APT
-apt_repository "mongodb" do
-  uri "http://downloads-distro.mongodb.org/repo/ubuntu-upstart"
-  distribution "dist"
-  components ["10gen"]
-  action :add
+# Install 10gen yum repo
+yum_repository "10gen" do
+  description "10gen mongo repository"
+  url "http://downloads-distro.mongodb.org/repo/redhat/os/i686"
 end
 
 # Install required APT packages

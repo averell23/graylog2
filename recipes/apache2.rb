@@ -43,13 +43,13 @@ package "mod_passenger"
 
 # Create an Apache vhost for the Graylog2 web interface
 template "apache-vhost-conf" do
-  path "/etc/apache2/sites-available/graylog2"
+  path "/etc/httpd/sites-available/graylog2"
   source "graylog2.apache2.erb"
   mode 0644
 end
 
 # Remove the default vhost
-apache_site "000-default" do
+apache_site "default" do
   enable false
 end
 

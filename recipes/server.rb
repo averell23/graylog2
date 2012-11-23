@@ -65,13 +65,6 @@ template "/etc/init.d/graylog2" do
   mode 0755
 end
 
-# Update the rc.d system
-execute "update-rc.d graylog2 defaults" do
-  creates "/etc/rc0.d/K20graylog2"
-  action :nothing
-  subscribes :run, resources(:template => "/etc/init.d/graylog2"), :immediately
-end
-
 # Service resource
 service "graylog2" do
   supports :restart => true

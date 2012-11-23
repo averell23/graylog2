@@ -20,7 +20,7 @@
 # Install 10gen yum repo
 yum_repository "10gen" do
   description "10gen mongo repository"
-  url "http://downloads-distro.mongodb.org/repo/redhat/os/i686"
+  url "http://downloads-distro.mongodb.org/repo/redhat/os/x86_64"
 end
 
 # Install required APT packages

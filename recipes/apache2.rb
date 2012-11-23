@@ -17,6 +17,18 @@
 # limitations under the License.
 #
 
+yum_key "passenger-gpg-key" do
+  url "http://passenger.stealthymonkeys.com/RPM-GPG-KEY-stealthymonkeys.asc"
+  action :add
+end
+
+yum_repository "passenger" do
+  description "Stealthmonkeys passenger repo"
+  url "http://passenger.stealthymonkeys.com/rhel/6.2/x86_64"
+  key "passenger-gpg-key"
+end
+
+
 # Install Graylog2 web interface
 include_recipe "graylog2::web_interface"
 
@@ -27,7 +39,7 @@ include_recipe "apache2"
 #    here allows the use of the 'vanilla' Opscode apache2 cookbook which doesn't have a mod_passenger.rb
 #    recipe. This should be compatible with the above, since the Opscode cookbook uses apt to install
 #    apache.
-package "libapache2-mod-passenger"
+package "mod_passenger"
 
 # Create an Apache vhost for the Graylog2 web interface
 template "apache-vhost-conf" do

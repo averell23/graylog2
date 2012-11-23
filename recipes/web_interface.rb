@@ -18,7 +18,7 @@
 #
 
 # Install required packages
-package "build-essential"
+include_recipe "build-essential"
 package "postfix"
 
 # Install gem dependencies

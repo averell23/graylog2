@@ -24,7 +24,7 @@ yum_repository "10gen" do
 end
 
 # Install required APT packages
-package "openjdk-6-jre"
+include_recipe "java"
 package "mongodb-10gen"
 package "mongo-10gen-server"
 

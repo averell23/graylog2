@@ -12,3 +12,4 @@ supports "centos"
 depends "apt" # http://community.opscode.com/cookbooks/apt
 depends "apache2" # http://community.opscode.com/cookbooks/apache2
 depends "yum"
+depends "java"

@@ -25,7 +25,7 @@ end
 
 # Install required APT packages
 include_recipe "java"
-package "mongodb-10gen"
+package "mongo-10gen"
 package "mongo-10gen-server"
 
 # Create the release directory

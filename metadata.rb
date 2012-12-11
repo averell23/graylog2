@@ -14,3 +14,4 @@ depends "apache2" # http://community.opscode.com/cookbooks/apache2
 depends "yum"
 depends "java"
 depends "chef-mongodb"
+depends "nginx"

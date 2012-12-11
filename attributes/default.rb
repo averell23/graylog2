@@ -1,5 +1,6 @@
 default.graylog2.basedir = "/var/graylog2"
-default.graylog2.bundle_gems_folder = "/bundles/gems"
+default.graylog2.bundle_gems_folder = "/bundle/gems"
+default.graylog2.shared_run_directory = "/shared/run"
 
 default.graylog2.server.version = "0.9.5p1"
 default.graylog2.web_interface.version = "0.9.5p2"

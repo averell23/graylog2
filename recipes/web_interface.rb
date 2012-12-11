@@ -31,6 +31,14 @@ directory "#{node.graylog2.basedir}/rel" do
   recursive true
 end
 
+# Create bundle gems directory
+directory "#{node.graylog2.basedir}#{node.graylog2.bundle_gems_folder}" do
+  mode 0755
+  owner node.graylog2.web_interface.user
+  group node.graylog2.web_interface.user
+  recursive true
+end
+
 # Download the desired version of Graylog2 web interface from GitHub
 remote_file "download_web_interface" do
   path "#{node.graylog2.basedir}/rel/graylog2-web-interface-#{node.graylog2.web_interface.version}.tar.gz"
@@ -65,13 +73,13 @@ end
 
 # Create general.yml
 template "#{node.graylog2.basedir}/web/config/general.yml" do
-  owner "nobody"
-  group "nobody"
+  owner node.graylog2.web_interface.user
+  group node.graylog2.web_interface.group
   mode 0644
 end
 
-# Chown the Graylog2 directory to nobody/nobody to allow web servers to serve it
-execute "sudo chown -R nobody:nobody graylog2-web-interface-#{node.graylog2.web_interface.version}" do
+# Chown the Graylog2 directory to proper user to allow web servers to serve it
+execute "sudo chown -R #{node.graylog2.web_interface.user}:#{node.graylog2.web_interface.group} graylog2-web-interface-#{node.graylog2.web_interface.version}" do
   cwd "#{node.graylog2.basedir}/rel"
   not_if do
     File.stat("#{node.graylog2.basedir}/rel/graylog2-web-interface-#{node.graylog2.web_interface.version}").uid == 65534

@@ -17,16 +17,11 @@
 # limitations under the License.
 #
 
-# Install 10gen yum repo
-yum_repository "10gen" do
-  description "10gen mongo repository"
-  url "http://downloads-distro.mongodb.org/repo/redhat/os/x86_64"
-end
-
-# Install required APT packages
 include_recipe "java"
-package "mongo-10gen"
-package "mongo-10gen-server"
+
+include_recipe "chef-mongodb::10gen_repo"
+include_recipe "chef-mongodb::default"
+
 
 # Create the release directory
 directory "#{node.graylog2.basedir}/rel" do

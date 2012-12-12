@@ -78,6 +78,13 @@ template "#{node.graylog2.basedir}/web/config/general.yml" do
   mode 0644
 end
 
+#Create indexr.yml is elasticsearch is enabled
+template "#{node.graylog2.basedir}/web/config/indexer.yml" do
+  owner node.graylog2.web_interface.user
+  group node.graylog2.web_interface.group
+  mode 0644
+end
+
 # Chown the Graylog2 directory to proper user to allow web servers to serve it
 execute "sudo chown -R #{node.graylog2.web_interface.user}:#{node.graylog2.web_interface.group} graylog2-web-interface-#{node.graylog2.web_interface.version}" do
   cwd "#{node.graylog2.basedir}/rel"
@@ -90,13 +97,13 @@ end
 
 # Stream message rake tasks
 cron "Graylog2 send stream alarms" do
-  minute node[:graylog2][:stream_alarms_cron_minute]
-  action node[:graylog2][:send_stream_alarms] ? :create : :delete
-  command "cd #{node[:graylog2][:basedir]}/web && RAILS_ENV=production bundle exec rake streamalarms:send"
+  minute node.graylog2.stream_alarms_cron_minute
+  action node.graylog2.send_stream_alarms ? :create : :delete
+  command "cd #{node.graylog2.basedir}/web && RAILS_ENV=production bundle exec rake streamalarms:send"
 end
 
 cron "Graylog2 send stream subscriptions" do
-  minute node[:graylog2][:stream_subscriptions_cron_minute]
-  action node[:graylog2][:send_stream_subscriptions] ? :create : :delete
-  command "cd #{node[:graylog2][:basedir]}/web && RAILS_ENV=production bundle exec rake subscriptions:send"
+  minute node.graylog2.stream_subscriptions_cron_minute
+  action node.graylog2.send_stream_subscriptions ? :create : :delete
+  command "cd #{node.graylog2.basedir}/web && RAILS_ENV=production bundle exec rake subscriptions:send"
 end

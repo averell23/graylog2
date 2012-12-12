@@ -78,6 +78,13 @@ template "#{node.graylog2.basedir}/web/config/general.yml" do
   mode 0644
 end
 
+#Create indexr.yml is elasticsearch is enabled
+template "#{node.graylog2.basedir}/web/config/indexer.yml" do
+  owner node.graylog2.web_interface.user
+  group node.graylog2.web_interface.group
+  mode 0644
+end
+
 # Chown the Graylog2 directory to proper user to allow web servers to serve it
 execute "sudo chown -R #{node.graylog2.web_interface.user}:#{node.graylog2.web_interface.group} graylog2-web-interface-#{node.graylog2.web_interface.version}" do
   cwd "#{node.graylog2.basedir}/rel"

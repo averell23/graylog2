@@ -22,6 +22,7 @@ include_recipe "java"
 include_recipe "chef-mongodb::10gen_repo"
 include_recipe "chef-mongodb::default"
 
+include_recipe "elasticsearch"
 
 # Create the release directory
 directory "#{node.graylog2.basedir}/rel" do
@@ -60,11 +61,21 @@ template "/etc/init.d/graylog2" do
   mode 0755
 end
 
+
+## Restarting services
 service "graylog2" do
   supports :restart => true
   action [:enable, :start]
 end
 
+
+service("elasticsearch") { action [ :stop ] }
+
+service("elasticsearch") { action :start }
+
 service "mongod" do
-  action [:enable, :start]
+  action [:enable, :restart]
 end
+
+service("graylog2" ) { action :restart }
+

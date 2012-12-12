@@ -1,0 +1,6 @@
+.bundle
+.cache
+.kitchen
+.chef/checksums
+bin
+*.swp

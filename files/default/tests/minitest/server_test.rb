@@ -20,4 +20,12 @@ describe 'graylog2::server' do
     assert `ps aux` =~ /graylog2-server/
   end
 
+  it "opens the syslog port" do
+    assert `nmap -p 8000 -sU -P0 localhost` =~ /1 host up/
+  end
+
+  it "opens the GELF port" do
+    assert `nmap -p 12201 -sU -P0 localhost` =~ /1 host up/
+  end
+
 end

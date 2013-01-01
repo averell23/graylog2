@@ -1,4 +1,8 @@
 site 'http://community.opscode.com/api/v1'
 
 cookbook 'chef-mongodb', :git => 'git://github.com/edelight/chef-mongodb.git'
+cookbook 'ruby_from_source', :git => 'git://github.com/better-cooking/ruby_from_source.git'
+cookbook 'rails_install', :git => 'git://github.com/averell23/rails_install.git'
+cookbook 'source_package', :git => 'git://github.com/averell23/source_package.git'
+
 cookbook 'java'

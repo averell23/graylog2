@@ -1,91 +1,109 @@
 #
-# Cookbook Name:: graylog2
-# Recipe:: web_interface
+# Cookbook Name:: rails_install
+# Recipe:: default
 #
-# Copyright 2010, Medidata Solutions Inc.
+# Copyright 2012, Daniel Hahn
 #
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
 #
-#     http://www.apache.org/licenses/LICENSE-2.0
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
 #
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-# Install required packages
-include_recipe "build-essential"
+# include_recipe 'mysql'
+#include_recipe "ruby_from_source"
+# include_recipe 'build-essential'
+
+include_recipe "passenger_apache2::mod_rails"
+
+# Include some useful packages
 package "postfix"
+package 'telnet'
 
-# Install gem dependencies
-gem_package "bundler"
-gem_package "rake"
+# mysql_database node.rails_install.app_name do
+#   connection({:host => "localhost", :username => 'root', :password => node['mysql']['server_root_password']})
+#   action :create
+# end
+#
+# mysql_database_user 'rails' do
+#   connection({:host => "localhost", :username => 'root', :password => node['mysql']['server_root_password']})
+#   password node.rails_install.db_pass
+#   database_name node.rails_install.app_name
+#   host '%'
+#   privileges [:all]
+#   action :grant
+# end
 
-# Create the release directory
-directory "#{node.graylog2.basedir}/rel" do
-  mode 0755
-  recursive true
-end
+# %w(database uploads).each do |shared_dir|
+#   directory "/var/apps/#{node.rails_install.app_name}/shared/#{shared_dir}" do
+#     recursive true
+#     owner node.apache.user
+#     group node.apache.group
+#     mode 0770
+#   end
+# end
 
-# Create bundle gems directory
-directory "#{node.graylog2.basedir}#{node.graylog2.bundle_gems_folder}" do
-  mode 0755
-  owner node.graylog2.web_interface.user
-  group node.graylog2.web_interface.user
-  recursive true
-end
 
-# Download the desired version of Graylog2 web interface from GitHub
-remote_file "download_web_interface" do
-  path "#{node.graylog2.basedir}/rel/graylog2-web-interface-#{node.graylog2.web_interface.version}.tar.gz"
-  source "https://github.com/downloads/Graylog2/graylog2-web-interface/graylog2-web-interface-#{node.graylog2.web_interface.version}.tar.gz"
-  action :create_if_missing
-end
+app_path = "/var/apps/graylog2-web-interface"
 
-# Unpack the desired version of Graylog2 web interface
-execute "tar zxf graylog2-web-interface-#{node.graylog2.web_interface.version}.tar.gz" do
-  cwd "#{node.graylog2.basedir}/rel"
-  creates "#{node.graylog2.basedir}/rel/graylog2-web-interface-#{node.graylog2.web_interface.version}/build_date"
-  action :nothing
-  subscribes :run, resources(:remote_file => "download_web_interface"), :immediately
-end
+application "graylog2-web-interface" do
+  action :force_deploy
+  path app_path
+  owner node.apache.user
+  group node.apache.group
 
-# Link to the desired Graylog2 web interface version
-link "#{node.graylog2.basedir}/web" do
-  to "#{node.graylog2.basedir}/rel/graylog2-web-interface-#{node.graylog2.web_interface.version}"
-end
+  repository "git://github.com/Graylog2/graylog2-web-interface.git"
+  revision node.graylog2.web_interface.version
+  create_dirs_before_symlink ['public', 'config']
+  # symlink_before_migrate "database" => "database"
+  symlinks "mongoid.yml" => "config/mongoid.yml", "general.yml" => "config/general.yml"
 
-# Perform bundle install on the newly-installed Graylog2 web interface version
-execute "bundle install" do
-  cwd "#{node.graylog2.basedir}/web"
-  action :nothing
-  subscribes :run, resources(:link => "#{node.graylog2.basedir}/web"), :immediately
-end
+  migrate false
 
-# Create mongoid.yml
-template "#{node.graylog2.basedir}/web/config/mongoid.yml" do
-  mode 0644
-end
-
-# Create general.yml
-template "#{node.graylog2.basedir}/web/config/general.yml" do
-  owner node.graylog2.web_interface.user
-  group node.graylog2.web_interface.group
-  mode 0644
-end
-
-# Chown the Graylog2 directory to proper user to allow web servers to serve it
-execute "sudo chown -R #{node.graylog2.web_interface.user}:#{node.graylog2.web_interface.group} graylog2-web-interface-#{node.graylog2.web_interface.version}" do
-  cwd "#{node.graylog2.basedir}/rel"
-  not_if do
-    File.stat("#{node.graylog2.basedir}/rel/graylog2-web-interface-#{node.graylog2.web_interface.version}").uid == 65534
+  rails do
+    # bundle_command '/opt/local/bin/bundle'
+    bundler true
+    bundler_deployment false
+    # database(
+    #   :adapter => 'sqlite3',
+    #   :database => 'database/production.sqlite3',
+    #   :pool => 5,
+    #   :timeout => 5000
+    # )
   end
-  action :nothing
-  subscribes :run, resources(:execute => "bundle install"), :immediately
+
+  before_symlink do
+    # Create mongoid.yml
+    template "#{app_path}/shared/mongoid.yml" do
+      owner node.apache.user
+      group node.apache.group
+      mode 0644
+    end
+
+    # Create general.yml
+    template "#{app_path}/shared/general.yml" do
+      owner node.apache.user
+      group node.apache.group
+      mode 0644
+    end
+  end
+
+end
+
+web_app "graylog2-web-interface" do
+  docroot "#{app_path}/current/public"
+  cookbook "passenger_apache2"
+  server_name "graylog"
+  server_aliases [ ]
+  rails_env "production"
 end
 
 # Stream message rake tasks

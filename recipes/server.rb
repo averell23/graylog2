@@ -22,6 +22,8 @@ include_recipe "java"
 include_recipe "chef-mongodb::10gen_repo"
 include_recipe "chef-mongodb::default"
 
+include_recipe "elasticsearch"
+
 package "nmap" # Only for testing, but useful anyway
 
 

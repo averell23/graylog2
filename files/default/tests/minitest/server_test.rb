@@ -28,4 +28,12 @@ describe 'graylog2::server' do
     assert `nmap -p 12201 -sU -P0 localhost` =~ /1 host up/
   end
 
+  it "enables elasticsearch" do
+    service('elasticsearch').must_be_enabled
+  end
+
+  it "starts elasticsearch" do
+    service('elasticsearch').must_be_running
+  end
+
 end

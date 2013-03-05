@@ -1,0 +1,17 @@
+# Ampel Service
+
+description     "Graylog2 Webservice"
+author          "Daniel Hahn"
+
+start on runlevel [2345]
+stop on starting rc RUNLEVEL=[016]
+
+respawn
+respawn limit 2 5
+
+env HOME=<%= @web_home %>
+
+script
+  cd $HOME
+  exec sudo -u <%= @web_user %> sh -c "PATH=<%= @ruby_path %>:$PATH bundle exec rails server -p <%= @web_port %>"
+end script

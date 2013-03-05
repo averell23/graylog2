@@ -4,4 +4,5 @@ cookbook "graylog2" do
   configuration 'nginx'
   configuration 'server'
   configuration 'web_interface'
+  configuration 'web_interface_source_ruby'
 end

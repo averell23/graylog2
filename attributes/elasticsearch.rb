@@ -1,1 +1,1 @@
-default.elasticsearch.version = "0.20.4"
+override.elasticsearch.version = "0.20.4"

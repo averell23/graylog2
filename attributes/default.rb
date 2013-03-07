@@ -7,6 +7,7 @@ default.graylog2.web_interface.version = "0.10.2"
 default.graylog2.web_interface.user = "nobody"
 default.graylog2.web_interface.group = "nobody"
 default.graylog2.web_interface.port = 8080
+default.graylog2.web_interface.ssl = true
 default.graylog2.port = 8000 # port 514 is blocked by default
 default.graylog2.mongodb.host = "127.0.0.1"
 default.graylog2.mongodb.port = 27017

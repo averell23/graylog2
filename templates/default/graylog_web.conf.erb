@@ -14,7 +14,7 @@ env HOME=<%= @web_home %>
 script
   cd $HOME
   <% if @ssl %>
-    exec sudo -u <%= @web_user %> sh -c "PATH=<%= @ruby_path %>:$PATH bundle exec thin start -p <%= @web_port %> --ssl"
+    exec sudo -u <%= @web_user %> sh -c "PATH=<%= @ruby_path %>:$PATH thin start -p <%= @web_port %> --ssl"
   <% else %>
     exec sudo -u <%= @web_user %> sh -c "PATH=<%= @ruby_path %>:$PATH bundle exec rails server -p <%= @web_port %>"
   <% end %>

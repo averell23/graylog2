@@ -1,7 +1,7 @@
 require File.expand_path('../support/helpers', __FILE__)
 
 describe 'graylog2::web_interface_source_ruby' do
-  
+
   include Helpers::Betterplace
 
   # Seems we can't check for the service, sine it uses

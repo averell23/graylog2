@@ -58,6 +58,10 @@ template "/etc/graylog2.conf" do
   mode 0644
 end
 
+template "/etc/graylog2-elasticsearch.yml" do
+  mode 0644
+end
+
 # Create init.d script
 template "/etc/init.d/graylog2" do
   source "graylog2.init.erb"

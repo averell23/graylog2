@@ -16,7 +16,6 @@ default.graylog2.mongodb.database = "graylog2"
 default.graylog2.mongodb.auth = "false"
 default.graylog2.mongodb.user = "user"
 default.graylog2.mongodb.password = "password"
-default.graylog2.collection_size = 50000000
 default.graylog2.send_stream_alarms = true
 default.graylog2.send_stream_subscriptions = true
 default.graylog2.stream_alarms_cron_minute = "*/15"

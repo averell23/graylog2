@@ -2,8 +2,8 @@ default.graylog2.basedir = "/var/graylog2"
 default.graylog2.bundle_gems_folder = "/bundle/gems"
 default.graylog2.shared_run_directory = "/shared/run"
 
-default.graylog2.server.version = "0.10.0"
-default.graylog2.web_interface.version = "0.10.2"
+default.graylog2.server.version = "0.11.0"
+default.graylog2.web_interface.version = "0.11.2"
 default.graylog2.web_interface.user = "nobody"
 default.graylog2.web_interface.group = "nobody"
 default.graylog2.web_interface.port = 8080

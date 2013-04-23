@@ -22,6 +22,7 @@ default.graylog2.stream_alarms_cron_minute = "*/15"
 default.graylog2.stream_alarms_email = "graylog2alarms@example.org"
 default.graylog2.stream_subscriptions_cron_minute = "*/15"
 default.graylog2.stream_subscriptions_email = "graylog2alarms@example.org"
-
+# Configure the database size. On our system one doc takes less than 0.01 megs,
+# So this setting would sum up to 10*1GB with a some margine of error.
 default.graylog2.max_docs_per_index = 1000000
 default.graylog2.max_indices = 10

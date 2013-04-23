@@ -21,13 +21,13 @@ udp_recvbuffer_sizes = 1048576
 # Embedded elasticsearch configuration file
 # pay attention to the working directory of the server, maybe use an absolute path here
 elasticsearch_config_file = /etc/graylog2-elasticsearch.yml
-elasticsearch_max_docs_per_index = 20000000
+elasticsearch_max_docs_per_index = <%= node.graylog2.max_docs_per_index %>
 
 elasticsearch_index_prefix = graylog2
 
 # How many indices do you want to keep? If the number of indices exceeds this number, older indices will be dropped.
 # elasticsearch_max_number_of_indices*elasticsearch_max_docs_per_index=total number of messages in your setup
-elasticsearch_max_number_of_indices = 20
+elasticsearch_max_number_of_indices = <%= node.graylog2.max_indices %>
 
 # How many ElasticSearch shards and replicas should be used per index? Note that this only applies to newly created indices.
 elasticsearch_shards = 4

@@ -26,3 +26,16 @@ default.graylog2.stream_subscriptions_email = "graylog2alarms@example.org"
 # So this setting would sum up to 10*1GB with a some margine of error.
 default.graylog2.max_docs_per_index = 1000000
 default.graylog2.max_indices = 10
+
+
+# Email transport
+default.graylog2.transport.email_enabled = "false"
+default.graylog2.transport.email_hostname = "mail.example.com"
+default.graylog2.transport.email_port = "587"
+default.graylog2.transport.email_use_auth = "true"
+default.graylog2.transport.email_use_tls = "true"
+default.graylog2.transport.email_auth_username = "you@example.com"
+default.graylog2.transport.email_auth_password = "secret"
+default.graylog2.transport.email_subject_prefix = "[graylog2]"
+default.graylog2.transport.email_from_email = "graylog2@example.com"
+default.graylog2.transport.email_from_name = "Graylog2"

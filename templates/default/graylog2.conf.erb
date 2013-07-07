@@ -60,8 +60,8 @@ output_batch_size = 5000
 
 # The number of parallel running processors.
 # Raise this number if your buffers are filling up.
-processbuffer_processors = 5
-outputbuffer_processors = 5
+processbuffer_processors = <%= node.graylog2.processbuffer_processors %>
+outputbuffer_processors = <%= node.graylog2.outputbuffer_processors %>
 
 # Wait strategy describing how buffer processors wait on a cursor sequence. (default: sleeping)
 # Possible types:
@@ -73,7 +73,7 @@ outputbuffer_processors = 5
 #     High throughput, low latency, higher CPU usage.
 #  - busy_spinning
 #     Avoids syscalls which could introduce latency jitter. Best when threads can be bound to specific CPU cores.
-processor_wait_strategy = sleeping
+processor_wait_strategy = <%= node.graylog2.processor_wait_strategy %>
 
 # Size of internal ring buffers. Raise this if raising outputbuffer_processors does not help anymore.
 # For optimum performance your LogMessage objects in the ring buffer should fit in your CPU L3 cache.

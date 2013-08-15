@@ -23,6 +23,10 @@ default.graylog2.stream_alarms_email = "graylog2alarms@example.org"
 default.graylog2.stream_subscriptions_cron_minute = "*/15"
 default.graylog2.stream_subscriptions_email = "graylog2alarms@example.org"
 default.graylog2.stream.email_web_interface_url = "http://your-graylog2.example.org"
+default.graylog2.graphite.enabled = 'false'
+default.graylog2.graphite.carbon_host = '127.0.0.1'
+default.graylog2.graphite.carbon_tcp_port = '2003'
+default.graylog2.graphite.prefix = 'logs'
 
 # Configure the database size. On our system one doc takes less than 0.01 megs,
 # So this setting would sum up to 10*1GB with a some margine of error.

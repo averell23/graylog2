@@ -23,6 +23,10 @@ default.graylog2.stream_alarms_email = "graylog2alarms@example.org"
 default.graylog2.stream_subscriptions_cron_minute = "*/15"
 default.graylog2.stream_subscriptions_email = "graylog2alarms@example.org"
 default.graylog2.stream.email_web_interface_url = "http://your-graylog2.example.org"
+# The number of parallel running processors
+# Raise this number if you buffers are filling up
+default.graylog2.processbuffer_processors = 5
+default.graylog2.outputbuffer_processors = 5
 default.graylog2.graphite.enabled = 'false'
 default.graylog2.graphite.carbon_host = '127.0.0.1'
 default.graylog2.graphite.carbon_tcp_port = '2003'
@@ -32,6 +36,18 @@ default.graylog2.graphite.prefix = 'logs'
 # So this setting would sum up to 10*1GB with a some margine of error.
 default.graylog2.max_docs_per_index = 1000000
 default.graylog2.max_indices = 10
+
+# Wait strategy describing how buffer processors wait on a cursor sequence.
+# Possible types:
+#  - yielding
+#     Compromise between performance and CPU usage.
+#  - sleeping
+#     Compromise between performance and CPU usage. Latency spikes can occur after quiet periods.
+#  - blocking
+#     High throughput, low latency, higher CPU usage.
+#  - busy_spinning
+#     Avoids syscalls which could introduce latency jitter. Best when threads can be bound to specific CPU cores.
+default.graylog2.processor_wait_strategy = 'blocking'
 
 
 # Email transport

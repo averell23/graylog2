@@ -150,10 +150,10 @@ enable_tokenizer_filter = true
 
 # Additional modules
 # Graphite
-#enable_graphite_output = false
-#graphite_carbon_host = 127.0.0.1
-#graphite_carbon_tcp_port = 2003
-#graphite_prefix = logs
+enable_graphite_output = <%= node.graylog2.graphite.enabled %>
+graphite_carbon_host = <%= node.graylog2.graphite.carbon_host %>
+graphite_carbon_tcp_port = <%= node.graylog2.graphite.carbon_tcp_port %>
+graphite_prefix = <%= node.graylog2.graphite.prefix %>
 
 # Librato Metrics (http://support.torch.sh/help/kb/graylog2-server/using-librato-metrics-with-graylog2)
 #enable_libratometrics_output = false

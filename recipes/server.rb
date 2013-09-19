@@ -19,8 +19,8 @@
 
 include_recipe "java"
 
-include_recipe "chef-mongodb::10gen_repo"
-include_recipe "chef-mongodb::default"
+include_recipe "mongodb::10gen_repo"
+include_recipe "mongodb::default"
 
 include_recipe "elasticsearch"
 

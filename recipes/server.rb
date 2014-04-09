@@ -17,15 +17,21 @@
 # limitations under the License.
 #
 
+set['java']['jdk_version'] = '7'
 include_recipe "java"
 
 include_recipe "mongodb::10gen_repo"
 include_recipe "mongodb::default"
 
+set['elasticsearch']['version'] = '0.90.10'
 include_recipe "elasticsearch"
 
 package "nmap" # Only for testing, but useful anyway
 
+
+# Initialize Secrets
+node.set_unless['graylog']['password_secret'] = secure_password
+node.set_unless['graylog']['root_password'] = secure_password
 
 # Create the release directory
 directory "#{node.graylog2.basedir}/rel" do
@@ -36,7 +42,7 @@ end
 # Download the desired version of Graylog2 server from GitHub
 remote_file "download_server" do
   path "#{node.graylog2.basedir}/rel/graylog2-server-#{node.graylog2.server.version}.tar.gz"
-  source "http://download.graylog2.org/graylog2-server/graylog2-server-#{node.graylog2.server.version}.tar.gz"
+  source "https://github.com/Graylog2/graylog2-server/releases/download/#{node.graylog2.server.version}/graylog2-server-#{node.graylog2.server.version}.tgz"
   action :create_if_missing
 end
 

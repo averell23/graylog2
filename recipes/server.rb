@@ -16,6 +16,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+require 'digest/sha2'
 
 set['java']['jdk_version'] = '7'
 include_recipe "java"
@@ -28,10 +29,12 @@ include_recipe "elasticsearch"
 
 package "nmap" # Only for testing, but useful anyway
 
-
-# Initialize Secrets
-node.set_unless['graylog']['password_secret'] = secure_password
-node.set_unless['graylog']['root_password'] = secure_password
+ruby do
+  include Opscode::OpenSSL::Password
+  # Initialize Secrets
+  node.set_unless['graylog']['password_secret'] = secure_password
+  node.set_unless['graylog']['root_password'] = secure_password
+end
 
 # Create the release directory
 directory "#{node.graylog2.basedir}/rel" do

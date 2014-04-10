@@ -29,11 +29,13 @@ include_recipe "elasticsearch"
 
 package "nmap" # Only for testing, but useful anyway
 
-ruby "create graylog passwords" do
-  include Opscode::OpenSSL::Password
-  # Initialize Secrets
-  node.set_unless['graylog']['password_secret'] = secure_password
-  node.set_unless['graylog']['root_password'] = secure_password
+ruby_block "create graylog passwords" do
+  block do
+    include Opscode::OpenSSL::Password
+    # Initialize Secrets
+    node.set_unless['graylog']['password_secret'] = secure_password
+    node.set_unless['graylog']['root_password'] = secure_password
+  end
 end
 
 # Create the release directory

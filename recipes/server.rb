@@ -31,7 +31,7 @@ package "nmap" # Only for testing, but useful anyway
 
 
 # Initialize Secrets
-include Opscode::OpenSSL::Password
+::Chef::Recipe.send(:include, Opscode::OpenSSL::Password)
 node.set_unless['graylog2']['password_secret'] = secure_password
 node.set_unless['graylog2']['root_password'] = secure_password
 

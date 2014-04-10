@@ -17,13 +17,13 @@
 # limitations under the License.
 #
 
-set['java']['jdk_version'] = '7'
+node.set['java']['jdk_version'] = '7'
 include_recipe "java"
 
 include_recipe "mongodb::10gen_repo"
 include_recipe "mongodb::default"
 
-set['elasticsearch']['version'] = '0.90.10'
+node.set['elasticsearch']['version'] = '0.90.10'
 include_recipe "elasticsearch"
 
 package "nmap" # Only for testing, but useful anyway

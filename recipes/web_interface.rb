@@ -17,8 +17,6 @@
 # limitations under the License.
 #
 
-ruby_bin = "#{node.ruby_from_source.prefix}/ruby/current/bin"
-
 # Create the release directory
 directory "#{node.graylog2.basedir}/rel" do
   mode 0755

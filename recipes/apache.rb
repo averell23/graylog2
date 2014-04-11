@@ -1,6 +1,6 @@
 include_recipe "apache2::mod_proxy"
 include_recipe "apache2::mod_proxy_http"
-if node.graylog2.apache2.ssl.enabled
+if node.graylog2.apache.ssl.enabled
   include_recipe "apache2::mod_ssl"
 end
 

@@ -61,7 +61,7 @@ template "/etc/graylog2.conf" do
   mode 0644
 end
 
-template "/etc/elasticsearch/elasticsearch.yml" do
+template "#{node.elasticsearch.path.conf}/elasticsearch.yml" do
   mode 0644
 end
 

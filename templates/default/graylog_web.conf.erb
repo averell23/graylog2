@@ -13,5 +13,5 @@ env HOME=<%= node.graylog2.basedir -%>/web
 
 script
   cd $HOME
-  exec sudo -u <%= node.graylog2.web_interface_user -%> sh -c "<%= node.graylog2.basedir -%>/web/bin/graylog2-web-interface -Dhttp.port=<%= node.graylog2.web_interface_port -%>"
+  exec sudo -u <%= node.graylog2.web_interface.user -%> sh -c "<%= node.graylog2.basedir -%>/web/bin/graylog2-web-interface -Dhttp.port=<%= node.graylog2.web_interface.port -%>"
 end script

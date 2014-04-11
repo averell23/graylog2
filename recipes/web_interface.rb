@@ -62,10 +62,21 @@ template "#{node.graylog2.basedir}/web/conf/graylog2-web-interface.conf" do
   mode 0644
 end
 
-# Chown the Graylog2 directory to proper user to allow web servers to serve it
-execute "sudo chown -R #{node.graylog2.web_interface.user}:#{node.graylog2.web_interface.group} graylog2-web-interface-#{node.graylog2.web_interface.version}" do
-  cwd "#{node.graylog2.basedir}/rel"
-  not_if do
-    File.stat("#{node.graylog2.basedir}/rel/graylog2-web-interface-#{node.graylog2.web_interface.version}").uid == 65534
-  end
+template "/etc/init/graylog_web.conf" do
+  source 'graylog_web.conf.erb'
+  owner 'root'
+  group 'root'
+  mode '0644'
+  variables(
+    :web_home => web_home,
+    :web_user => node.graylog2.web_interface.user,
+    :web_port => node.graylog2.web_interface.port,
+    :ruby_path => ruby_bin,
+    :ssl => node.graylog2.web_interface.ssl
+  )
+end
+
+service "graylog_web" do
+  action [:enable, :start]
+  provider Chef::Provider::Service::Upstart
 end

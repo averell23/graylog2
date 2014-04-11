@@ -18,13 +18,9 @@
 #
 require 'digest/sha2'
 
-node.set['java']['jdk_version'] = '7'
 include_recipe "java"
-
 include_recipe "mongodb::10gen_repo"
 include_recipe "mongodb::default"
-
-node.set['elasticsearch']['version'] = '0.90.10'
 include_recipe "elasticsearch"
 
 package "nmap" # Only for testing, but useful anyway
@@ -65,8 +61,12 @@ template "/etc/graylog2.conf" do
   mode 0644
 end
 
-template "/etc/graylog2-elasticsearch.yml" do
+template "/etc/elasticsearch/elasticsearch.yml" do
   mode 0644
+end
+
+service "elasticsearch" do
+  action :restart
 end
 
 # Create init.d script

@@ -10,7 +10,6 @@ supports "centos"
 
 # cookbook dependencies
 depends "apt" # http://community.opscode.com/cookbooks/apt
-depends "ruby_from_source"
 depends "yum"
 depends "java"
 depends "mongodb"

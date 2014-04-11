@@ -67,13 +67,6 @@ template "/etc/init/graylog_web.conf" do
   owner 'root'
   group 'root'
   mode '0644'
-  variables(
-    :web_home => web_home,
-    :web_user => node.graylog2.web_interface.user,
-    :web_port => node.graylog2.web_interface.port,
-    :ruby_path => ruby_bin,
-    :ssl => node.graylog2.web_interface.ssl
-  )
 end
 
 service "graylog_web" do

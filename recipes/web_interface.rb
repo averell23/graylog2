@@ -53,15 +53,12 @@ link "#{node.graylog2.basedir}/web" do
   to "#{node.graylog2.basedir}/rel/graylog2-web-interface-#{node.graylog2.web_interface.version}"
 end
 
-# Create mongoid.yml
-template "#{node.graylog2.basedir}/web/config/mongoid.yml" do
-  mode 0644
-end
+# Initialize Secrets
+::Chef::Recipe.send(:include, Opscode::OpenSSL::Password)
+node.set_unless['graylog2']['web_interface_secret'] = secure_password
 
-# Create general.yml
-template "#{node.graylog2.basedir}/web/config/general.yml" do
-  owner node.graylog2.web_interface.user
-  group node.graylog2.web_interface.group
+# Create web interface config
+template "#{node.graylog2.basedir}/web/conf/graylog2-web-interface.conf" do
   mode 0644
 end
 
@@ -71,17 +68,4 @@ execute "sudo chown -R #{node.graylog2.web_interface.user}:#{node.graylog2.web_i
   not_if do
     File.stat("#{node.graylog2.basedir}/rel/graylog2-web-interface-#{node.graylog2.web_interface.version}").uid == 65534
   end
-end
-
-# Stream message rake tasks
-cron "Graylog2 send stream alarms" do
-  minute node[:graylog2][:stream_alarms_cron_minute]
-  action node[:graylog2][:send_stream_alarms] ? :create : :delete
-  command "cd #{node[:graylog2][:basedir]}/web && PATH=#{ruby_bin}:$PATH RAILS_ENV=production bundle exec rake streamalarms:send"
-end
-
-cron "Graylog2 send stream subscriptions" do
-  minute node[:graylog2][:stream_subscriptions_cron_minute]
-  action node[:graylog2][:send_stream_subscriptions] ? :create : :delete
-  command "cd #{node[:graylog2][:basedir]}/web &&  PATH=#{ruby_bin}:$PATH RAILS_ENV=production bundle exec rake subscriptions:send"
 end

@@ -29,7 +29,6 @@ include_recipe "elasticsearch"
 
 package "nmap" # Only for testing, but useful anyway
 
-
 # Initialize Secrets
 ::Chef::Recipe.send(:include, Opscode::OpenSSL::Password)
 node.set_unless['graylog2']['password_secret'] = secure_password

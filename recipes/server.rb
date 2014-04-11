@@ -61,14 +61,6 @@ template "/etc/graylog2.conf" do
   mode 0644
 end
 
-template "#{node.elasticsearch.path.conf}/elasticsearch.yml" do
-  mode 0644
-end
-
-service "elasticsearch" do
-  action :restart
-end
-
 # Create init.d script
 template "/etc/init.d/graylog2" do
   source "graylog2.init.erb"

@@ -21,6 +21,10 @@
   SSLCACertificateFile <%= node.graylog2.apache.ssl.ca_certificate_file %>
     <%- end %>
   <%- end %>
+  <Location />
+    Order allow,deny
+    Allow from all
+  </Location>
 
   ErrorLog /var/log/httpd/error.log
   LogLevel warn

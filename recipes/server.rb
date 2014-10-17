@@ -39,7 +39,7 @@ end
 # Download the desired version of Graylog2 server from GitHub
 remote_file "download_server" do
   path "#{node.graylog2.basedir}/rel/graylog2-server-#{node.graylog2.server.version}.tar.gz"
-  source "https://github.com/Graylog2/graylog2-server/releases/download/#{node.graylog2.server.version}/graylog2-server-#{node.graylog2.server.version}.tgz"
+  source "https://github.com/Graylog2/graylog2-server/archive/#{node.graylog2.server.version}.tar.gz"
   action :create_if_missing
 end
 

@@ -2,7 +2,7 @@ default.graylog2.basedir = "/var/graylog2"
 default.graylog2.bundle_gems_folder = "/bundle/gems"
 default.graylog2.shared_run_directory = "/shared/run"
 
-default.graylog2.server.version = "0.20.1"
+default.graylog2.server.version = "0.91.3"
 default.graylog2.mongodb.host = "127.0.0.1"
 default.graylog2.mongodb.port = 27017
 default.graylog2.mongodb.max_connections = 500

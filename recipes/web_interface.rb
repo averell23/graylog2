@@ -33,13 +33,13 @@ end
 
 # Download the desired version of Graylog2 web interface from GitHub
 remote_file "download_web_interface" do
-  path "#{node.graylog2.basedir}/rel/graylog2-web-interface-#{node.graylog2.web_interface.version}.tar.gz"
-  source "https://github.com/Graylog2/graylog2-web-interface/releases/download/#{node.graylog2.web_interface.version}/graylog2-web-interface-#{node.graylog2.web_interface.version}.tgz"
+  path "#{node.graylog2.basedir}/rel/graylog2-web-interface-#{node.graylog2.web_interface.version}.tgz"
+  source "http://packages.graylog2.org/releases/graylog2-web-interface/graylog2-web-interface-#{node.graylog2.web_interface.version}.tgz"
   action :create_if_missing
 end
 
 # Unpack the desired version of Graylog2 web interface
-execute "tar zxf graylog2-web-interface-#{node.graylog2.web_interface.version}.tar.gz" do
+execute "tar zxf graylog2-web-interface-#{node.graylog2.web_interface.version}.tgz" do
   cwd "#{node.graylog2.basedir}/rel"
   creates "#{node.graylog2.basedir}/rel/graylog2-web-interface-#{node.graylog2.web_interface.version}/build_date"
   action :nothing
